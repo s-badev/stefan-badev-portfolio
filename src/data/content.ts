@@ -315,7 +315,7 @@ export const t = {
     liveDemo: "Демо",
     viewCode: "Код",
     openColab: "Open in Colab",
-    colabNote: "Интерактивен notebook · Необходим е OpenAI API key",
+    colabNote: "Интерактивен Colab notebook · Изисква OpenAI API key",
     newTab: "(отваря се в нов раздел)",
     kinds: { coded: "Кодиран проект", "low-code": "Low-code автоматизация", "no-code": "No-code автоматизация" },
     automationIntro: "Практични AI-асистирани и no-code процеси, свързващи услуги, данни и известия.",
