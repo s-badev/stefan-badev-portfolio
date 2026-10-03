@@ -331,7 +331,7 @@ function Index() {
   useEffect(() => {
     const els = mainRef.current?.querySelectorAll(".reveal") ?? [];
     const obs = new IntersectionObserver(
-      (es) => es.forEach((e) => { if (e.isIntersecting) { (e.target as HTMLElement).dataset.visible = "true"; obs.unobserve(e.target); } }),
+      (es) => es.forEach((e) => { if (e.isIntersecting) { e.target.setAttribute("data-visible", "true"); obs.unobserve(e.target); } }),
       { rootMargin: "0px 0px -8% 0px" },
     );
     els.forEach((el) => obs.observe(el));
