@@ -31,39 +31,32 @@ const useLang = () => {
   return { lang, setLang, tr: t[lang] };
 };
 
-function LangSwitch() {
+function LangSwitch({ dark }: { dark?: boolean }) {
   const { lang, setLang } = useLang();
   return (
-    <div role="group" aria-label="Language" className="inline-flex rounded-md border bg-background p-0.5 font-mono text-xs">
-      {(["en", "bg"] as Lang[]).map((l) => (
-        <button
-          key={l}
-          type="button"
-          onClick={() => setLang(l)}
-          aria-pressed={lang === l}
-          className={`min-h-9 min-w-11 rounded-sm px-2 transition-colors ${
-            lang === l ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-          }`}
-        >
-          {l === "en" ? "EN" : "БГ"}
-        </button>
+    <div role="group" aria-label="Language" className="flex items-center font-mono text-xs">
+      {(["en", "bg"] as Lang[]).map((l, i) => (
+        <span key={l} className="flex items-center">
+          {i > 0 && <span aria-hidden="true" className={dark ? "text-ink-border" : "text-border"}>/</span>}
+          <button
+            type="button"
+            onClick={() => setLang(l)}
+            aria-pressed={lang === l}
+            className={`min-h-11 min-w-11 px-1 tracking-wider transition-colors ${
+              lang === l
+                ? dark ? "text-ink-foreground underline decoration-gold underline-offset-4" : "text-foreground underline decoration-gold underline-offset-4"
+                : dark ? "text-ink-muted hover:text-ink-foreground" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {l === "en" ? "EN" : "БГ"}
+          </button>
+        </span>
       ))}
     </div>
   );
 }
 
 /* ---------- small pieces ---------- */
-const GithubIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
-    <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.29-1.69-1.29-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z" />
-  </svg>
-);
-const LinkedinIcon = () => (
-  <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5 fill-current">
-    <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
-  </svg>
-);
-
 function ExtLink({ href, children, className }: { href: string; children: ReactNode; className?: string }) {
   const { tr } = useLang();
   return (
@@ -74,35 +67,34 @@ function ExtLink({ href, children, className }: { href: string; children: ReactN
   );
 }
 
-function Socials() {
-  const btn =
-    "inline-flex h-11 w-11 items-center justify-center rounded-md border bg-background text-foreground transition-colors hover:border-primary hover:text-primary";
+function Socials({ dark }: { dark?: boolean }) {
+  const cls = `inline-flex min-h-11 items-center gap-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
+    dark ? "text-ink-muted hover:text-ink-foreground" : "text-muted-foreground hover:text-foreground"
+  }`;
   return (
-    <div className="flex gap-2">
-      <ExtLink href={links.github} className={btn}>
-        <GithubIcon />
-        <span className="sr-only">GitHub</span>
-      </ExtLink>
-      <ExtLink href={links.linkedin} className={btn}>
-        <LinkedinIcon />
-        <span className="sr-only">LinkedIn</span>
-      </ExtLink>
+    <div className="flex items-center gap-5">
+      <ExtLink href={links.github} className={cls}><span className="link-line">GitHub</span><span aria-hidden="true" className="text-gold">↗</span></ExtLink>
+      <ExtLink href={links.linkedin} className={cls}><span className="link-line">LinkedIn</span><span aria-hidden="true" className="text-gold">↗</span></ExtLink>
     </div>
   );
 }
 
-const btnPrimary =
-  "inline-flex min-h-11 items-center justify-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover";
-const btnOutline =
-  "inline-flex min-h-11 items-center justify-center rounded-md border border-primary/40 bg-background px-4 text-sm font-medium text-primary transition-colors hover:border-primary";
+const base = "group inline-flex min-h-11 items-center gap-3 rounded-[3px] px-5 text-sm font-medium tracking-wide transition-colors";
+const btnInkPrimary = `${base} bg-ink-foreground text-ink hover:bg-gold`;
+const btnInkGhost = `${base} border border-ink-border text-ink-foreground hover:border-gold`;
+const btnPrimary = `${base} bg-ink text-ink-foreground hover:bg-primary`;
+const btnGhost = `${base} border border-foreground/25 text-foreground hover:border-foreground`;
+const Arrow = ({ d = "→" }: { d?: string }) => (
+  <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">{d}</span>
+);
 
 function Workflow({ steps }: { steps: string[] }) {
   return (
-    <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-1.5 font-mono text-xs text-foreground">
+    <ol className="flex flex-wrap items-center gap-x-2 gap-y-2 font-mono text-[12px] text-foreground/85">
       {steps.map((s, i) => (
-        <li key={s} className="flex items-center gap-1.5">
-          <span className="rounded-sm bg-secondary px-1.5 py-1">{s}</span>
-          {i < steps.length - 1 && <span aria-hidden="true" className="text-primary">→</span>}
+        <li key={s} className="flex items-center gap-2">
+          <span>{s}</span>
+          {i < steps.length - 1 && <span aria-hidden="true" className="text-gold">→</span>}
         </li>
       ))}
     </ol>
@@ -111,95 +103,90 @@ function Workflow({ steps }: { steps: string[] }) {
 
 function Chips({ items }: { items: string[] }) {
   return (
-    <ul className="flex flex-wrap gap-1.5">
-      {items.map((i) => (
-        <li key={i} className="rounded-sm border px-2 py-0.5 font-mono text-[11px] text-muted-foreground">
-          {i}
-        </li>
+    <ul className="flex flex-wrap gap-x-3 gap-y-1 font-mono text-[12px] text-muted-foreground">
+      {items.map((i, n) => (
+        <li key={i}>{i}{n < items.length - 1 && <span aria-hidden="true" className="ml-3 text-border">/</span>}</li>
       ))}
     </ul>
   );
 }
 
-function Evidence({ p, compact }: { p: Project; compact?: boolean }) {
-  const { lang, tr } = useLang();
-  return (
-    <figure className="overflow-hidden rounded-md border bg-secondary/60">
-      <div className={`grid place-items-center ${compact ? "aspect-[16/7]" : "aspect-[16/10]"}`}>
-        {p.evidence.image ? (
-          <img src={p.evidence.image} alt={p.evidence.caption[lang]} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 hover:scale-[1.015]" />
-        ) : (
-          <div className="px-4 text-center">
-            <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">{tr.evidence}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{tr.evidencePending}</p>
-          </div>
-        )}
-      </div>
-      <figcaption className="border-t bg-background px-3 py-2 font-mono text-[11px] text-muted-foreground">
-        {p.evidence.caption[lang]}
-      </figcaption>
-    </figure>
-  );
-}
-
-function Label({ children }: { children: ReactNode }) {
-  return <h4 className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">{children}</h4>;
+function Meta({ children }: { children: ReactNode }) {
+  return <h4 className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">{children}</h4>;
 }
 
 function Actions({ p }: { p: Project }) {
   const { tr } = useLang();
   if (!p.liveUrl && !p.githubUrl) return null;
   return (
-    <div className="flex flex-wrap gap-2">
-      {p.liveUrl && <ExtLink href={p.liveUrl} className={btnPrimary}>{tr.liveDemo} ↗</ExtLink>}
-      {p.githubUrl && <ExtLink href={p.githubUrl} className={btnOutline}>{tr.viewCode} ↗</ExtLink>}
+    <div className="flex flex-wrap gap-3 pt-1">
+      {p.liveUrl && <ExtLink href={p.liveUrl} className={btnPrimary}>{tr.liveDemo}<Arrow d="↗" /></ExtLink>}
+      {p.githubUrl && <ExtLink href={p.githubUrl} className={btnGhost}>{tr.viewCode}<Arrow d="↗" /></ExtLink>}
     </div>
   );
 }
 
-function CaseStudy({ p }: { p: Project }) {
+/** Real evidence becomes a major visual; without an image, only a quiet one-line note. */
+function Evidence({ p }: { p: Project }) {
+  const { lang, tr } = useLang();
+  if (p.evidence.image)
+    return (
+      <figure className="overflow-hidden rounded-[3px] border">
+        <img src={p.evidence.image} alt={p.evidence.caption[lang]} loading="lazy" className="w-full object-cover transition-transform duration-700 hover:scale-[1.02]" />
+        <figcaption className="px-3 py-2 font-mono text-[11px] text-muted-foreground">{p.evidence.caption[lang]}</figcaption>
+      </figure>
+    );
+  return (
+    <p className="flex items-center gap-3 font-mono text-[11px] text-muted-foreground/80">
+      <span aria-hidden="true" className="h-px w-6 bg-border" />
+      {tr.evidence}: {p.evidence.caption[lang]} — {tr.evidencePending.toLowerCase()}
+    </p>
+  );
+}
+
+function CaseStudy({ p, index, total }: { p: Project; index: number; total?: number }) {
   const { lang, tr } = useLang();
   const hl = p.highlights[lang];
+  const flip = index % 2 === 1;
+  const num = String(index + 1).padStart(2, "0");
   return (
-    <article className={`reveal ${p.featured ? "" : ""} border-t pt-8 first:border-t-0 first:pt-0`}>
-      <p className="font-mono text-[11px] uppercase tracking-wider text-primary">
-        {p.subtitle[lang]}
-        {p.label && <span className="text-muted-foreground"> · {p.label[lang]}</span>}
-      </p>
-      <h3 className={`mt-1 font-semibold tracking-tight ${p.featured ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl"}`}>
-        {p.title}
-      </h3>
-      <div className="mt-5 grid gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
-        <div className="min-w-0 space-y-5">
-          <div>
-            <Label>{tr.problem}</Label>
-            <p className="mt-1.5 leading-relaxed">{p.problem[lang]}</p>
-          </div>
+    <article className={`reveal relative border-t border-foreground/15 py-12 lg:py-16 ${flip ? "lg:-mx-14 lg:bg-paper lg:px-14 xl:-mx-20 xl:px-20" : ""}`}>
+      <div className={`grid gap-6 md:grid-cols-[5.5rem_minmax(0,1fr)] md:gap-10 ${flip ? "md:grid-cols-[minmax(0,1fr)_5.5rem]" : ""}`}>
+        <p aria-hidden="true" className={`font-mono text-5xl font-light leading-none text-gold/70 md:text-6xl ${flip ? "md:order-2 md:text-right" : ""}`}>
+          {num}
+          {total && <span className="ml-1 align-top text-xs text-muted-foreground">/{String(total).padStart(2, "0")}</span>}
+        </p>
+        <div className="min-w-0">
+          <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-primary">
+            {p.subtitle[lang]}
+            {p.label && <span className="text-muted-foreground"> · {p.label[lang]}</span>}
+          </p>
+          <h3 className={`mt-2 font-semibold tracking-tight text-foreground ${p.featured ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl"}`}>{p.title}</h3>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-foreground/85">{p.problem[lang]}</p>
+
           {hl.length > 0 && (
-            <div>
-              <Label>{tr.built}</Label>
-              <ul className="mt-1.5 space-y-1.5">
+            <div className="mt-8">
+              <Meta>{tr.built}</Meta>
+              <ul className="mt-3 grid gap-x-8 gap-y-2.5 md:grid-cols-2">
                 {hl.map((h) => (
-                  <li key={h} className="flex gap-2.5 leading-relaxed text-foreground/90">
-                    <span aria-hidden="true" className="mt-2.5 h-px w-3 shrink-0 bg-primary" />
+                  <li key={h} className="flex gap-3 leading-relaxed">
+                    <span aria-hidden="true" className="mt-[0.7rem] h-px w-4 shrink-0 bg-gold" />
                     <span>{h}</span>
                   </li>
                 ))}
               </ul>
             </div>
           )}
-          <div>
-            <Label>{tr.how}</Label>
-            <div className="mt-2"><Workflow steps={p.workflow} /></div>
+
+          <div className="mt-8 grid gap-6 border-t border-dashed border-foreground/15 pt-6 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+            <div className="min-w-0"><Meta>{tr.how}</Meta><div className="mt-2.5"><Workflow steps={p.workflow} /></div></div>
+            <div className="min-w-0"><Meta>{tr.stack}</Meta><div className="mt-2.5"><Chips items={p.technologies} /></div></div>
           </div>
-          <div>
-            <Label>{tr.stack}</Label>
-            <div className="mt-2"><Chips items={p.technologies} /></div>
+
+          <div className="mt-8 space-y-5">
+            <Actions p={p} />
+            <Evidence p={p} />
           </div>
-          <Actions p={p} />
-        </div>
-        <div className="min-w-0">
-          <Evidence p={p} />
         </div>
       </div>
     </article>
@@ -209,25 +196,33 @@ function CaseStudy({ p }: { p: Project }) {
 function SmallAutomation({ p }: { p: Project }) {
   const { lang } = useLang();
   return (
-    <article className="reveal min-w-0 rounded-md border p-5">
-      <p className="font-mono text-[11px] uppercase tracking-wider text-primary">{p.subtitle[lang]}</p>
-      <h3 className="mt-1 text-lg font-semibold tracking-tight">{p.title}</h3>
-      {p.label && <p className="mt-0.5 font-mono text-[11px] text-muted-foreground">{p.label[lang]}</p>}
-      <p className="mt-3 text-sm leading-relaxed">{p.problem[lang]}</p>
+    <article className="reveal min-w-0 border-t border-foreground/15 pt-6">
+      <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-primary">{p.subtitle[lang]}</p>
+      <h3 className="mt-2 text-xl font-semibold tracking-tight">{p.title}</h3>
+      {p.label && <p className="mt-1 font-mono text-[11px] text-muted-foreground">{p.label[lang]}</p>}
+      <p className="mt-3 leading-relaxed text-foreground/85">{p.problem[lang]}</p>
       <div className="mt-4"><Workflow steps={p.workflow} /></div>
-      <div className="mt-4"><Evidence p={p} compact /></div>
+      <div className="mt-4"><Evidence p={p} /></div>
     </article>
   );
 }
 
 function Section({ id, n, children, intro }: { id: SectionId; n: number; children: ReactNode; intro?: string }) {
   const { tr } = useLang();
+  const num = String(n).padStart(2, "0");
   return (
-    <section id={id} aria-labelledby={`${id}-h`} className="scroll-mt-20 py-14 first:pt-6 lg:scroll-mt-10 lg:py-20 lg:first:pt-20">
-      <header className="mb-8">
-        <p className="font-mono text-xs text-primary">{String(n).padStart(2, "0")}</p>
-        <h2 id={`${id}-h`} className="mt-1 text-3xl font-semibold tracking-tight sm:text-4xl">{tr.nav[id]}</h2>
-        {intro && <p className="mt-3 max-w-xl text-muted-foreground">{intro}</p>}
+    <section id={id} aria-labelledby={`${id}-h`} className="relative scroll-mt-16 pt-20 pb-6 lg:scroll-mt-0 lg:pt-28">
+      <header className="relative mb-10">
+        <span aria-hidden="true" className="pointer-events-none absolute -top-10 right-0 select-none font-mono text-[7rem] font-light leading-none text-foreground/[0.05] sm:text-[10rem]">
+          {num}
+        </span>
+        <p className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+          <span className="text-gold">{num}</span>
+          <span aria-hidden="true" className="h-px w-8 bg-gold/60" />
+          {tr.eyebrow[id]}
+        </p>
+        <h2 id={`${id}-h`} className="relative mt-4 text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">{tr.nav[id]}</h2>
+        {intro && <p className="relative mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">{intro}</p>}
       </header>
       {children}
     </section>
@@ -252,64 +247,79 @@ function Identity() {
   const { lang, tr } = useLang();
   const active = useActiveSection();
   const name = lang === "en" ? "Stefan Badev" : "Стефан Бадев";
+  const [first, last] = name.split(" ");
   return (
     <>
-      {/* mobile top bar */}
-      <div className="sticky top-0 z-20 flex items-center justify-between border-b bg-background/95 px-5 py-2 backdrop-blur lg:hidden">
-        <span className="text-sm font-semibold">{name}</span>
-        <LangSwitch />
-      </div>
-
       {/* mobile hero */}
-      <header className="bg-secondary px-5 pb-7 pt-6 sm:px-8 lg:hidden">
-        <div className="flex items-center gap-4">
-          <img src={portrait.url} alt={`Portrait of ${name}`} width={88} height={110} className="h-[110px] w-[88px] shrink-0 rounded-md object-cover object-top" />
-          <div className="min-w-0">
-            <h1 className="text-2xl font-semibold tracking-tight">{name}</h1>
-            <p className="mt-0.5 font-medium text-primary">{tr.role}</p>
-            <p className="mt-0.5 text-sm text-muted-foreground">{tr.location}</p>
-          </div>
+      <header className="bg-ink px-5 pb-10 pt-3 text-ink-foreground sm:px-8 lg:hidden">
+        <div className="flex items-center justify-between">
+          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-muted">{tr.location}</p>
+          <LangSwitch dark />
         </div>
-        <p className="mt-4 font-mono text-xs leading-relaxed text-muted-foreground">{tr.positioning}</p>
-        <div className="mt-5 flex flex-wrap items-center gap-2">
-          <a href={cv.en.path} download className={btnPrimary}>{tr.downloadCv}</a>
-          <Socials />
+        <div className="mt-5 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4">
+          <h1 className="min-w-0 text-[2.75rem] font-semibold leading-[0.95] tracking-tight sm:text-6xl">
+            {first}<br />{last}
+          </h1>
+          <img src={portrait.url} alt={`Portrait of ${name}`} width={96} height={120} className="h-[120px] w-[96px] shrink-0 rounded-[3px] object-cover object-[50%_20%] grayscale-[15%]" />
         </div>
+        <div className="mt-5 flex items-center gap-3">
+          <span aria-hidden="true" className="h-px w-8 bg-gold" />
+          <p className="text-lg font-medium text-ink-foreground">{tr.role}</p>
+        </div>
+        <p className="mt-3 font-mono text-[12px] leading-relaxed text-ink-muted">{tr.positioning}</p>
+        <div className="mt-7 flex flex-wrap items-center gap-3">
+          <a href="#ai" className={btnInkPrimary}>{tr.viewWork}<Arrow d="↓" /></a>
+          <a href={cv.en.path} download className={btnInkGhost}>{tr.downloadCv}</a>
+        </div>
+        <div className="mt-4"><Socials dark /></div>
       </header>
 
-      {/* desktop sticky column */}
-      <aside className="hidden lg:block lg:bg-secondary">
-        <div className="sticky top-0 flex h-screen flex-col justify-between overflow-y-auto px-10 py-12 xl:px-14">
-          <div>
-            <img src={portrait.url} alt={`Portrait of ${name}`} width={160} height={200} className="h-[200px] w-[160px] rounded-md object-cover object-top" />
-            <h1 className="mt-6 text-4xl font-semibold tracking-tight">{name}</h1>
-            <p className="mt-1 text-lg font-medium text-primary">{tr.role}</p>
-            <p className="mt-3 font-mono text-xs leading-relaxed text-muted-foreground">{tr.positioning}</p>
-            <p className="mt-4 max-w-sm leading-relaxed text-foreground/85">{tr.statement}</p>
-            <div className="mt-6 flex gap-2">
-              <a href="#ai" className={btnPrimary}>{tr.viewWork}</a>
-              <a href={cv.en.path} download className={btnOutline}>{tr.downloadCv}</a>
-            </div>
-            <nav aria-label="Sections" className="mt-10">
-              <ul className="space-y-0.5">
-                {sections.map((s, i) => {
-                  const on = active === s;
-                  return (
-                    <li key={s}>
-                      <a href={`#${s}`} aria-current={on ? "true" : undefined} className={`group flex items-center gap-3 py-1.5 text-sm transition-colors ${on ? "text-primary" : "text-muted-foreground hover:text-foreground"}`}>
-                        <span className="font-mono text-[11px]">{String(i + 1).padStart(2, "0")}</span>
-                        <span aria-hidden="true" className={`h-px transition-all ${on ? "w-10 bg-primary" : "w-5 bg-border group-hover:w-8 group-hover:bg-foreground"}`} />
-                        <span className={on ? "font-medium" : ""}>{tr.nav[s]}</span>
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-            </nav>
+      {/* desktop identity panel */}
+      <aside className="hidden bg-ink text-ink-foreground lg:block">
+        <div className="sticky top-0 flex h-screen flex-col overflow-y-auto px-12 py-12 xl:px-16">
+          <div className="flex items-center justify-between">
+            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-muted">{tr.available}</p>
           </div>
-          <div className="mt-8 flex items-center justify-between">
-            <Socials />
-            <LangSwitch />
+
+          <div className="mt-10 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-6">
+            <h1 className="min-w-0 text-6xl font-semibold leading-[0.92] tracking-tight xl:text-7xl">
+              {first}<br />{last}
+            </h1>
+            <img src={portrait.url} alt={`Portrait of ${name}`} width={112} height={140} className="h-[140px] w-[112px] rounded-[3px] object-cover object-[50%_20%] grayscale-[15%]" />
+          </div>
+
+          <div className="mt-6 flex items-center gap-3">
+            <span aria-hidden="true" className="h-px w-10 bg-gold" />
+            <p className="text-xl font-medium">{tr.role}</p>
+          </div>
+          <p className="mt-4 font-mono text-[12px] leading-relaxed text-ink-muted">{tr.positioning}</p>
+          <p className="mt-5 max-w-md leading-relaxed text-ink-foreground/80">{tr.statement}</p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href="#ai" className={btnInkPrimary}>{tr.viewWork}<Arrow /></a>
+            <a href={cv.en.path} download className={btnInkGhost}>{tr.downloadCv}</a>
+          </div>
+
+          <nav aria-label="Sections" className="mt-12">
+            <ul>
+              {sections.map((s, i) => {
+                const on = active === s;
+                return (
+                  <li key={s}>
+                    <a href={`#${s}`} aria-current={on ? "true" : undefined} className={`group flex items-center gap-4 py-2 text-sm transition-colors ${on ? "text-ink-foreground" : "text-ink-muted hover:text-ink-foreground"}`}>
+                      <span className={`font-mono text-[11px] ${on ? "text-gold" : ""}`}>{String(i + 1).padStart(2, "0")}</span>
+                      <span aria-hidden="true" className={`h-px transition-all duration-300 ${on ? "w-14 bg-gold" : "w-6 bg-ink-border group-hover:w-10 group-hover:bg-ink-muted"}`} />
+                      <span className={on ? "font-medium" : ""}>{tr.nav[s]}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          <div className="mt-auto flex items-center justify-between border-t border-ink-border pt-6">
+            <Socials dark />
+            <LangSwitch dark />
           </div>
         </div>
       </aside>
@@ -352,65 +362,68 @@ function Page({ mainRef }: { mainRef: React.RefObject<HTMLElement | null> }) {
   const cvRows = (["en", "bg"] as const).filter((k) => cv[k].available && cv[k].path);
 
   return (
-    <div className="min-h-screen overflow-x-clip lg:grid lg:grid-cols-[minmax(360px,40%)_minmax(0,1fr)]">
-      <a href="#content" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground">
+    <div className="min-h-screen overflow-x-clip lg:grid lg:grid-cols-[minmax(400px,35%)_minmax(0,1fr)]">
+      <a href="#content" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:rounded-[3px] focus:bg-ink focus:px-4 focus:py-2 focus:text-ink-foreground">
         {tr.skip}
       </a>
       <Identity />
       <main id="content" ref={mainRef} className="min-w-0 px-5 sm:px-8 lg:px-14 xl:px-20">
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto max-w-4xl">
           <Section id="ai" n={1}>
-            <div className="space-y-12">{by("ai").map((p) => <CaseStudy key={p.id} p={p} />)}</div>
+            {by("ai").map((p, i, a) => <CaseStudy key={p.id} p={p} index={i} total={a.length} />)}
           </Section>
 
           <Section id="automation" n={2} intro={tr.automationIntro}>
-            <div className="space-y-6">
-              {auto.filter((p) => p.featured).map((p) => (
-                <div key={p.id}>
-                  <p className="mb-3 inline-block rounded-sm bg-secondary px-2 py-0.5 font-mono text-[11px] text-muted-foreground">{tr.kinds[p.kind]}</p>
-                  <CaseStudy p={p} />
-                </div>
-              ))}
-              <div className="grid gap-4 md:grid-cols-2">
-                {auto.filter((p) => !p.featured).map((p) => <SmallAutomation key={p.id} p={p} />)}
+            {auto.filter((p) => p.featured).map((p, i) => (
+              <div key={p.id}>
+                <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.14em] text-gold">{tr.kinds[p.kind]}</p>
+                <CaseStudy p={p} index={i} />
               </div>
+            ))}
+            <div className="mt-4 grid gap-10 md:grid-cols-2">
+              {auto.filter((p) => !p.featured).map((p) => <SmallAutomation key={p.id} p={p} />)}
             </div>
           </Section>
 
           <Section id="web" n={3}>
-            <div className="space-y-12">{by("web").map((p) => <CaseStudy key={p.id} p={p} />)}</div>
+            {by("web").map((p, i, a) => <CaseStudy key={p.id} p={p} index={i} total={a.length} />)}
           </Section>
 
           <Section id="how" n={4}>
-            <ul className="reveal max-w-2xl space-y-2 text-lg leading-relaxed">
-              {tr.howIWork.map((l) => <li key={l}>{l}</li>)}
-            </ul>
-          </Section>
-
-          <Section id="journey" n={5}>
-            <ol className="reveal relative grid gap-6 border-l pl-6 md:grid-cols-5 md:gap-4 md:border-l-0 md:border-t md:pl-0 md:pt-6">
-              {journey.map((j, i) => (
-                <li key={j.years} className="relative min-w-0">
-                  <span aria-hidden="true" className={`absolute -left-[29px] top-1.5 h-2.5 w-2.5 rounded-full border-2 md:-top-[31px] md:left-0 ${i === journey.length - 1 ? "border-primary bg-primary" : "border-primary bg-background"}`} />
-                  <p className="font-mono text-xs text-primary">{j.years}</p>
-                  <p className="mt-1 font-medium leading-snug">{j.title[lang]}</p>
-                  <p className="mt-1 text-sm text-muted-foreground">{j.note[lang]}</p>
-                </li>
+            <ol className="reveal max-w-3xl border-l-2 border-gold pl-6">
+              {tr.howIWork.map((l, i) => (
+                <li key={l} className={`text-xl leading-relaxed sm:text-2xl ${i === 0 ? "font-medium text-foreground" : "text-foreground/75"} ${i ? "mt-3" : ""}`}>{l}</li>
               ))}
             </ol>
           </Section>
 
+          <Section id="journey" n={5}>
+            <ol className="reveal relative grid gap-8 border-l border-foreground/20 pl-6 md:grid-cols-5 md:gap-5 md:border-l-0 md:border-t md:pl-0 md:pt-8">
+              {journey.map((j, i) => {
+                const last = i === journey.length - 1;
+                return (
+                  <li key={j.years} className="relative min-w-0">
+                    <span aria-hidden="true" className={`absolute -left-[29px] top-1.5 h-2.5 w-2.5 rotate-45 md:-top-[37px] md:left-0 ${last ? "bg-gold" : "border border-foreground/40 bg-background"}`} />
+                    <p className={`font-mono text-xs ${last ? "text-gold" : "text-muted-foreground"}`}>{j.years}</p>
+                    <p className="mt-1.5 font-semibold leading-snug">{j.title[lang]}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{j.note[lang]}</p>
+                  </li>
+                );
+              })}
+            </ol>
+          </Section>
+
           <Section id="cv" n={6} intro={tr.cvIntro}>
-            <ul className="reveal divide-y rounded-md border">
+            <ul className="reveal border-y border-foreground/15">
               {cvRows.map((k) => (
-                <li key={k} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+                <li key={k} className="flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="font-medium">{cv[k].label}</p>
-                    <p className="font-mono text-[11px] text-muted-foreground">PDF</p>
+                    <p className="text-xl font-semibold">{cv[k].label}</p>
+                    <p className="mt-0.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">PDF</p>
                   </div>
-                  <div className="flex gap-2">
-                    <ExtLink href={cv[k].path!} className={btnOutline}>{tr.preview}</ExtLink>
-                    <a href={cv[k].path!} download className={btnPrimary}>{tr.download}</a>
+                  <div className="flex flex-wrap gap-3">
+                    <ExtLink href={cv[k].path!} className={btnGhost}>{tr.preview}<Arrow d="↗" /></ExtLink>
+                    <a href={cv[k].path!} download className={btnPrimary}>{tr.download}<Arrow d="↓" /></a>
                   </div>
                 </li>
               ))}
@@ -418,22 +431,22 @@ function Page({ mainRef }: { mainRef: React.RefObject<HTMLElement | null> }) {
           </Section>
 
           <Section id="contact" n={7} intro={tr.contactIntro}>
-            <div className="reveal space-y-5">
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">{tr.email}</p>
-                <a href={`mailto:${links.email}`} className="mt-1 inline-block break-all text-2xl font-semibold tracking-tight text-primary underline-offset-4 hover:underline sm:text-3xl">
-                  {links.email}
-                </a>
+            <div className="reveal">
+              <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">{tr.email}</p>
+              <a href={`mailto:${links.email}`} className="link-line mt-2 inline-block break-all text-3xl font-semibold tracking-tight text-primary sm:text-5xl">
+                {links.email}
+              </a>
+              <div className="mt-8 flex flex-wrap items-center gap-x-10 gap-y-3 border-t border-foreground/15 pt-6">
+                <div>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted-foreground">{tr.phone}</p>
+                  <a href={links.phoneHref} className="link-line inline-flex min-h-11 items-center text-lg">{links.phoneDisplay}</a>
+                </div>
+                <Socials />
               </div>
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-wider text-muted-foreground">{tr.phone}</p>
-                <a href={links.phoneHref} className="mt-1 inline-flex min-h-11 items-center text-foreground hover:text-primary">{links.phoneDisplay}</a>
-              </div>
-              <Socials />
             </div>
           </Section>
 
-          <footer className="border-t py-8 font-mono text-xs text-muted-foreground">{tr.footer}</footer>
+          <footer className="mt-20 border-t border-foreground/15 py-8 font-mono text-xs text-muted-foreground">{tr.footer}</footer>
         </div>
       </main>
     </div>
