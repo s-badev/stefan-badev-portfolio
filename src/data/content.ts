@@ -206,6 +206,45 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/s-badev/FreshBox",
     liveUrl: "https://freshbox-bg.netlify.app",
   },
+  {
+    id: "bookbuddy",
+    category: "web",
+    kind: "coded",
+    featured: false,
+    title: "BookBuddy",
+    subtitle: { en: "Personal reading tracker", bg: "Личен тракер за четене" },
+    problem: {
+      en: "Create a browser-based application for organising a personal book library and tracking actual reading progress.",
+      bg: "Браузърно приложение за организиране на лична библиотека и проследяване на реалния напредък в четенето.",
+    },
+    highlights: {
+      en: [
+        "Personal library with add, edit and delete functionality",
+        "Title/author search, filters and sorting",
+        "Reading logs and recent activity",
+        "Reading statistics and progress tracking",
+        "Weekly reading goals and daily streaks",
+        "Reading challenges",
+        "Persistent settings and data using localStorage",
+        "Light / dark / system theme support",
+      ],
+      bg: [
+        "Лична библиотека с добавяне, редакция и изтриване",
+        "Търсене по заглавие/автор, филтри и сортиране",
+        "Дневник на четенето и последна активност",
+        "Статистика и проследяване на напредъка",
+        "Седмични цели и дневни серии",
+        "Предизвикателства за четене",
+        "Постоянни настройки и данни чрез localStorage",
+        "Светла / тъмна / системна тема",
+      ],
+    },
+    workflow: ["Library data", "Reading logs", "Progress/statistics", "Goals/streaks", "localStorage persistence"],
+    technologies: ["JavaScript", "HTML", "CSS", "localStorage"],
+    evidence: { image: null, caption: { en: "Product screenshot", bg: "Екран от продукта" } },
+    githubUrl: "https://github.com/s-badev/BookBuddy",
+    liveUrl: null,
+  },
 ];
 
 export const journey: { years: string; title: Localized; note: Localized }[] = [

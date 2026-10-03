@@ -126,33 +126,27 @@ function Actions({ p }: { p: Project }) {
   );
 }
 
-/** Real evidence becomes a major visual; without an image, only a quiet one-line note. */
+/** Evidence renders only when a real image exists. */
 function Evidence({ p }: { p: Project }) {
-  const { lang, tr } = useLang();
-  if (p.evidence.image)
-    return (
-      <figure className="overflow-hidden rounded-[3px] border">
-        <img src={p.evidence.image} alt={p.evidence.caption[lang]} loading="lazy" className="w-full object-cover transition-transform duration-700 hover:scale-[1.02]" />
-        <figcaption className="px-3 py-2 font-mono text-[11px] text-muted-foreground">{p.evidence.caption[lang]}</figcaption>
-      </figure>
-    );
+  const { lang } = useLang();
+  if (!p.evidence.image) return null;
   return (
-    <p className="flex items-center gap-3 font-mono text-[11px] text-muted-foreground/80">
-      <span aria-hidden="true" className="h-px w-6 bg-border" />
-      {tr.evidence}: {p.evidence.caption[lang]} — {tr.evidencePending.toLowerCase()}
-    </p>
+    <figure className="overflow-hidden rounded-[3px] border">
+      <img src={p.evidence.image} alt={p.evidence.caption[lang]} loading="lazy" className="w-full object-cover transition-transform duration-700 hover:scale-[1.02]" />
+      <figcaption className="px-3 py-2 font-mono text-[11px] text-muted-foreground">{p.evidence.caption[lang]}</figcaption>
+    </figure>
   );
 }
 
-function CaseStudy({ p, index, total }: { p: Project; index: number; total?: number }) {
+function CaseStudy({ p, index, total, compact }: { p: Project; index: number; total?: number; compact?: boolean }) {
   const { lang, tr } = useLang();
   const hl = p.highlights[lang];
   const flip = index % 2 === 1;
   const num = String(index + 1).padStart(2, "0");
   return (
-    <article className={`reveal relative border-t border-foreground/15 py-12 lg:py-16 ${flip ? "lg:-mx-14 lg:bg-paper lg:px-14 xl:-mx-20 xl:px-20" : ""}`}>
+    <article className={`reveal relative border-t border-foreground/15 ${compact ? "py-8 lg:py-10" : "py-12 lg:py-16"} ${flip ? "lg:-mx-14 lg:bg-paper lg:px-14 xl:-mx-20 xl:px-20" : ""}`}>
       <div className={`grid gap-6 md:grid-cols-[5.5rem_minmax(0,1fr)] md:gap-10 ${flip ? "md:grid-cols-[minmax(0,1fr)_5.5rem]" : ""}`}>
-        <p aria-hidden="true" className={`font-mono text-5xl font-light leading-none text-gold/70 md:text-6xl ${flip ? "md:order-2 md:text-right" : ""}`}>
+        <p aria-hidden="true" className={`font-mono font-light leading-none text-gold/70 ${compact ? "text-3xl md:text-4xl" : "text-5xl md:text-6xl"} ${flip ? "md:order-2 md:text-right" : ""}`}>
           {num}
           {total && <span className="ml-1 align-top text-xs text-muted-foreground">/{String(total).padStart(2, "0")}</span>}
         </p>
@@ -161,13 +155,13 @@ function CaseStudy({ p, index, total }: { p: Project; index: number; total?: num
             {p.subtitle[lang]}
             {p.label && <span className="text-muted-foreground"> · {p.label[lang]}</span>}
           </p>
-          <h3 className={`mt-2 font-semibold tracking-tight text-foreground ${p.featured ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl"}`}>{p.title}</h3>
-          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-foreground/85">{p.problem[lang]}</p>
+          <h3 className={`mt-2 font-semibold tracking-tight text-foreground ${compact ? "text-xl sm:text-2xl" : p.featured ? "text-3xl sm:text-4xl" : "text-2xl sm:text-3xl"}`}>{p.title}</h3>
+          <p className={`mt-4 max-w-2xl leading-relaxed text-foreground/85 ${compact ? "" : "text-lg"}`}>{p.problem[lang]}</p>
 
           {hl.length > 0 && (
-            <div className="mt-8">
+            <div className={compact ? "mt-6" : "mt-8"}>
               <Meta>{tr.built}</Meta>
-              <ul className="mt-3 grid gap-x-8 gap-y-2.5 md:grid-cols-2">
+              <ul className={`mt-3 grid gap-x-8 md:grid-cols-2 ${compact ? "gap-y-1.5 text-[15px]" : "gap-y-2.5"}`}>
                 {hl.map((h) => (
                   <li key={h} className="flex gap-3 leading-relaxed">
                     <span aria-hidden="true" className="mt-[0.7rem] h-px w-4 shrink-0 bg-gold" />
@@ -373,7 +367,11 @@ function Page({ mainRef }: { mainRef: React.RefObject<HTMLElement | null> }) {
             {by("ai").map((p, i, a) => <CaseStudy key={p.id} p={p} index={i} total={a.length} />)}
           </Section>
 
-          <Section id="automation" n={2} intro={tr.automationIntro}>
+          <Section id="web" n={2}>
+            {by("web").map((p, i, a) => <CaseStudy key={p.id} p={p} index={i} total={a.length} compact={i >= 2} />)}
+          </Section>
+
+          <Section id="automation" n={3} intro={tr.automationIntro}>
             {auto.filter((p) => p.featured).map((p, i) => (
               <div key={p.id}>
                 <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.14em] text-gold">{tr.kinds[p.kind]}</p>
@@ -383,10 +381,6 @@ function Page({ mainRef }: { mainRef: React.RefObject<HTMLElement | null> }) {
             <div className="mt-4 grid gap-10 md:grid-cols-2">
               {auto.filter((p) => !p.featured).map((p) => <SmallAutomation key={p.id} p={p} />)}
             </div>
-          </Section>
-
-          <Section id="web" n={3}>
-            {by("web").map((p, i, a) => <CaseStudy key={p.id} p={p} index={i} total={a.length} />)}
           </Section>
 
           <Section id="how" n={4}>
