@@ -206,6 +206,45 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/s-badev/FreshBox",
     liveUrl: "https://freshbox-bg.netlify.app",
   },
+  {
+    id: "bookbuddy",
+    category: "web",
+    kind: "coded",
+    featured: false,
+    title: "BookBuddy",
+    subtitle: { en: "Personal reading tracker", bg: "Личен тракер за четене" },
+    problem: {
+      en: "Create a browser-based application for organising a personal book library and tracking actual reading progress.",
+      bg: "Браузърно приложение за организиране на лична библиотека и проследяване на реалния напредък в четенето.",
+    },
+    highlights: {
+      en: [
+        "Personal library with add, edit and delete functionality",
+        "Title/author search, filters and sorting",
+        "Reading logs and recent activity",
+        "Reading statistics and progress tracking",
+        "Weekly reading goals and daily streaks",
+        "Reading challenges",
+        "Persistent settings and data using localStorage",
+        "Light / dark / system theme support",
+      ],
+      bg: [
+        "Лична библиотека с добавяне, редакция и изтриване",
+        "Търсене по заглавие/автор, филтри и сортиране",
+        "Дневник на четенето и последна активност",
+        "Статистика и проследяване на напредъка",
+        "Седмични цели и дневни серии",
+        "Предизвикателства за четене",
+        "Постоянни настройки и данни чрез localStorage",
+        "Светла / тъмна / системна тема",
+      ],
+    },
+    workflow: ["Library data", "Reading logs", "Progress/statistics", "Goals/streaks", "localStorage persistence"],
+    technologies: ["JavaScript", "HTML", "CSS", "localStorage"],
+    evidence: { image: null, caption: { en: "Product screenshot", bg: "Екран от продукта" } },
+    githubUrl: "https://github.com/s-badev/BookBuddy",
+    liveUrl: null,
+  },
 ];
 
 export const journey: { years: string; title: Localized; note: Localized }[] = [
@@ -233,12 +272,11 @@ export const t = {
     how: "How it works",
     stack: "Stack",
     evidence: "Evidence",
-    evidencePending: "Screenshot coming soon",
     liveDemo: "Live Demo",
     viewCode: "View Code",
     newTab: "(opens in a new tab)",
     kinds: { coded: "Coded project", "low-code": "Low-code automation", "no-code": "No-code automation" },
-    automationIntro: "Workflow automation built with low-code / no-code platforms — distinct from the coded software projects.",
+    automationIntro: "Practical AI-assisted and no-code workflows connecting services, data and notifications.",
     howIWork: [
       "I define the architecture and data flow first.",
       "I use AI-assisted coding tools — Claude Code, Cursor, GitHub Copilot, Augment Code — during implementation.",
@@ -269,12 +307,11 @@ export const t = {
     how: "Как работи",
     stack: "Технологии",
     evidence: "Доказателство",
-    evidencePending: "Предстои скрийншот",
     liveDemo: "Демо",
     viewCode: "Код",
     newTab: "(отваря се в нов раздел)",
     kinds: { coded: "Кодиран проект", "low-code": "Low-code автоматизация", "no-code": "No-code автоматизация" },
-    automationIntro: "Автоматизации, изградени с low-code / no-code платформи — отделно от кодираните софтуерни проекти.",
+    automationIntro: "Практични AI-асистирани и no-code процеси, свързващи услуги, данни и известия.",
     howIWork: [
       "Първо дефинирам архитектурата и потока на данните.",
       "По време на имплементацията използвам AI инструменти — Claude Code, Cursor, GitHub Copilot, Augment Code.",
@@ -291,5 +328,5 @@ export const t = {
   },
 };
 
-export const sections = ["ai", "automation", "web", "how", "journey", "cv", "contact"] as const;
+export const sections = ["ai", "web", "automation", "how", "journey", "cv", "contact"] as const;
 export type SectionId = (typeof sections)[number];
