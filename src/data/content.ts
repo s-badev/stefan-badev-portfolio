@@ -1,3 +1,7 @@
+import makeImg from "@/assets/make-workflow.webp";
+import inboxImg from "@/assets/zapier-inbox-workflow.webp";
+import vitaminImg from "@/assets/zapier-vitamin-workflow.webp";
+
 export type Lang = "en" | "bg";
 export type Localized = { en: string; bg: string };
 
@@ -26,7 +30,7 @@ export type Project = {
   highlights: { en: string[]; bg: string[] };
   workflow: string[];
   technologies: string[];
-  evidence: { image: string | null; caption: Localized };
+  evidence: { image: string | null; caption: Localized; alt?: Localized; size?: "wide" | "tall" | "small" };
   githubUrl: string | null;
   liveUrl: string | null;
   colabUrl?: string;
@@ -109,7 +113,7 @@ export const projects: Project[] = [
     highlights: { en: [], bg: [] },
     workflow: ["Gmail", "OpenAI", "Google Sheets", "Discord", "Telegram"],
     technologies: ["Make", "Gmail", "OpenAI", "Google Sheets", "Discord", "Telegram"],
-    evidence: { image: null, caption: { en: "Make scenario screenshot", bg: "Екран от Make сценария" } },
+    evidence: { image: makeImg, size: "wide", caption: { en: "Make scenario — Gmail → OpenAI → Google Sheets → Discord → Telegram", bg: "Make scenario — Gmail → OpenAI → Google Sheets → Discord → Telegram" }, alt: { en: "Make automation workflow connecting Gmail, OpenAI, Google Sheets, Discord and Telegram.", bg: "Make automation workflow, свързващ Gmail, OpenAI, Google Sheets, Discord и Telegram." } },
     githubUrl: null,
     liveUrl: null,
   },
@@ -128,7 +132,7 @@ export const projects: Project[] = [
     highlights: { en: [], bg: [] },
     workflow: ["Gmail", "Webhooks by Zapier", "Telegram", "Google Sheets", "Discord"],
     technologies: ["Zapier"],
-    evidence: { image: null, caption: { en: "Zap screenshot", bg: "Екран от Zap-а" } },
+    evidence: { image: inboxImg, size: "tall", caption: { en: "Zapier workflow — incoming email → Telegram → Google Sheets → Discord", bg: "Zapier workflow — входящ имейл → Telegram → Google Sheets → Discord" }, alt: { en: "Zapier Inbox Alert Bot workflow with Gmail, Telegram webhook, Google Sheets and Discord.", bg: "Zapier Inbox Alert Bot workflow с Gmail, Telegram webhook, Google Sheets и Discord." } },
     githubUrl: null,
     liveUrl: null,
   },
@@ -147,7 +151,7 @@ export const projects: Project[] = [
     highlights: { en: [], bg: [] },
     workflow: ["Chatbot", "Knowledge Base", "Lead Capture", "Zapier Tables", "Google Sheets"],
     technologies: ["Zapier Chatbots", "Zapier Tables", "Google Sheets"],
-    evidence: { image: null, caption: { en: "Chatbot / Zap screenshot", bg: "Екран от чатбота / Zap-а" } },
+    evidence: { image: vitaminImg, size: "small", caption: { en: "Zapier Tables → Google Sheets data workflow", bg: "Zapier Tables → Google Sheets поток на данни" }, alt: { en: "Zapier workflow sending collected chatbot data from Zapier Tables to Google Sheets.", bg: "Zapier workflow за записване на събрани от chatbot данни от Zapier Tables в Google Sheets." } },
     githubUrl: null,
     liveUrl: null,
   },
