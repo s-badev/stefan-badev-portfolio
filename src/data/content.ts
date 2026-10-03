@@ -276,7 +276,7 @@ export const t = {
     viewCode: "View Code",
     newTab: "(opens in a new tab)",
     kinds: { coded: "Coded project", "low-code": "Low-code automation", "no-code": "No-code automation" },
-    automationIntro: "Workflow automation built with low-code / no-code platforms — distinct from the coded software projects.",
+    automationIntro: "Practical AI-assisted and no-code workflows connecting services, data and notifications.",
     howIWork: [
       "I define the architecture and data flow first.",
       "I use AI-assisted coding tools — Claude Code, Cursor, GitHub Copilot, Augment Code — during implementation.",
@@ -311,7 +311,7 @@ export const t = {
     viewCode: "Код",
     newTab: "(отваря се в нов раздел)",
     kinds: { coded: "Кодиран проект", "low-code": "Low-code автоматизация", "no-code": "No-code автоматизация" },
-    automationIntro: "Автоматизации, изградени с low-code / no-code платформи — отделно от кодираните софтуерни проекти.",
+    automationIntro: "Практични AI-асистирани и no-code процеси, свързващи услуги, данни и известия.",
     howIWork: [
       "Първо дефинирам архитектурата и потока на данните.",
       "По време на имплементацията използвам AI инструменти — Claude Code, Cursor, GitHub Copilot, Augment Code.",
