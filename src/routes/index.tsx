@@ -134,10 +134,14 @@ function Actions({ p }: { p: Project }) {
 function Evidence({ p }: { p: Project }) {
   const { lang } = useLang();
   if (!p.evidence.image) return null;
+  const { image, alt, caption, size } = p.evidence;
+  const w = size === "wide" ? "md:max-w-[800px] md:mt-8" : size === "tall" ? "md:max-w-[480px]" : "md:max-w-[460px]";
   return (
-    <figure className="overflow-hidden rounded-[3px] border">
-      <img src={p.evidence.image} alt={p.evidence.caption[lang]} loading="lazy" className="w-full object-cover transition-transform duration-700 hover:scale-[1.02]" />
-      <figcaption className="px-3 py-2 font-mono text-[11px] text-muted-foreground">{p.evidence.caption[lang]}</figcaption>
+    <figure className={`w-full max-w-full ${w}`}>
+      <a href={image} target="_blank" rel="noopener noreferrer" className="block">
+        <img src={image} alt={(alt ?? caption)[lang]} loading="lazy" decoding="async" className="block h-auto w-full rounded-[3px] border border-border object-contain" />
+      </a>
+      <figcaption className="mt-2 font-mono text-[12px] leading-relaxed text-muted-foreground">{caption[lang]}</figcaption>
     </figure>
   );
 }
