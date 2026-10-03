@@ -328,5 +328,5 @@ export const t = {
   },
 };
 
-export const sections = ["ai", "automation", "web", "how", "journey", "cv", "contact"] as const;
+export const sections = ["ai", "web", "automation", "how", "journey", "cv", "contact"] as const;
 export type SectionId = (typeof sections)[number];
