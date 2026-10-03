@@ -29,6 +29,7 @@ export type Project = {
   evidence: { image: string | null; caption: Localized };
   githubUrl: string | null;
   liveUrl: string | null;
+  colabUrl?: string;
 };
 
 export const projects: Project[] = [
@@ -61,6 +62,7 @@ export const projects: Project[] = [
     technologies: ["Python", "OpenAI API", "text-embedding-3-small", "ChromaDB", "pypdf", "gTTS", "Pillow"],
     evidence: { image: null, caption: { en: "Architecture diagram · execution screenshot", bg: "Архитектурна диаграма · екран от изпълнение" } },
     githubUrl: "https://github.com/s-badev/pdf-ai-assistant-rag",
+    colabUrl: "https://colab.research.google.com/drive/1cnDF9h9InMKB7IlpydNnti5adjn1Mnfi?usp=sharing",
     liveUrl: null,
   },
   {
@@ -90,6 +92,7 @@ export const projects: Project[] = [
     technologies: ["Python", "LangGraph", "LangChain", "OpenAI API"],
     evidence: { image: null, caption: { en: "Workflow diagram · HITL / structured output", bg: "Workflow диаграма · HITL / структуриран изход" } },
     githubUrl: "https://github.com/s-badev/ai-career-project-strategist-langgraph",
+    colabUrl: "https://colab.research.google.com/github/s-badev/ai-career-project-strategist-langgraph/blob/main/AI_Career_Project_Strategist_LangGraph_v2.ipynb",
     liveUrl: null,
   },
   {
@@ -243,7 +246,7 @@ export const projects: Project[] = [
     technologies: ["JavaScript", "HTML", "CSS", "localStorage"],
     evidence: { image: null, caption: { en: "Product screenshot", bg: "Екран от продукта" } },
     githubUrl: "https://github.com/s-badev/BookBuddy",
-    liveUrl: null,
+    liveUrl: "https://bookbuddy-bg.netlify.app/",
   },
 ];
 
@@ -274,6 +277,8 @@ export const t = {
     evidence: "Evidence",
     liveDemo: "Live Demo",
     viewCode: "View Code",
+    openColab: "Open in Colab",
+    colabNote: "Interactive notebook · OpenAI API key required",
     newTab: "(opens in a new tab)",
     kinds: { coded: "Coded project", "low-code": "Low-code automation", "no-code": "No-code automation" },
     automationIntro: "Practical AI-assisted and no-code workflows connecting services, data and notifications.",
@@ -309,6 +314,8 @@ export const t = {
     evidence: "Доказателство",
     liveDemo: "Демо",
     viewCode: "Код",
+    openColab: "Open in Colab",
+    colabNote: "Интерактивен notebook · Необходим е OpenAI API key",
     newTab: "(отваря се в нов раздел)",
     kinds: { coded: "Кодиран проект", "low-code": "Low-code автоматизация", "no-code": "No-code автоматизация" },
     automationIntro: "Практични AI-асистирани и no-code процеси, свързващи услуги, данни и известия.",

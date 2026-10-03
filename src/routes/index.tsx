@@ -117,11 +117,15 @@ function Meta({ children }: { children: ReactNode }) {
 
 function Actions({ p }: { p: Project }) {
   const { tr } = useLang();
-  if (!p.liveUrl && !p.githubUrl) return null;
+  if (!p.liveUrl && !p.githubUrl && !p.colabUrl) return null;
   return (
-    <div className="flex flex-wrap gap-3 pt-1">
-      {p.liveUrl && <ExtLink href={p.liveUrl} className={btnPrimary}>{tr.liveDemo}<Arrow d="↗" /></ExtLink>}
-      {p.githubUrl && <ExtLink href={p.githubUrl} className={btnGhost}>{tr.viewCode}<Arrow d="↗" /></ExtLink>}
+    <div className="space-y-2 pt-1">
+      <div className="flex flex-wrap gap-3">
+        {p.colabUrl && <ExtLink href={p.colabUrl} className={btnPrimary}>{tr.openColab}<Arrow d="↗" /></ExtLink>}
+        {p.liveUrl && <ExtLink href={p.liveUrl} className={btnPrimary}>{tr.liveDemo}<Arrow d="↗" /></ExtLink>}
+        {p.githubUrl && <ExtLink href={p.githubUrl} className={btnGhost}>{tr.viewCode}<Arrow d="↗" /></ExtLink>}
+      </div>
+      {p.colabUrl && <p className="font-mono text-xs text-muted-foreground">{tr.colabNote}</p>}
     </div>
   );
 }
