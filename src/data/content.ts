@@ -257,12 +257,12 @@ export const projects: Project[] = [
   },
 ];
 
-export const journey: { years: string; title: Localized; note: Localized }[] = [
-  { years: "2008–2017", title: { en: "National Library", bg: "Национална библиотека" }, note: { en: "Long-term structured, detail-oriented work", bg: "Дългогодишна структурирана работа с внимание към детайла" } },
-  { years: "2018–2019", title: { en: "Technical Assistant / IT Support", bg: "Технически асистент / IT поддръжка" }, note: { en: "Hands-on technical troubleshooting", bg: "Практическо решаване на технически проблеми" } },
-  { years: "2020–2023", title: { en: "QA Tester · uTest", bg: "QA тестер · uTest" }, note: { en: "Testing, bug reporting, quality mindset", bg: "Тестване, докладване на бъгове, фокус върху качеството" } },
-  { years: "2023–now", title: { en: "Independent Contractor", bg: "Самостоятелна дейност" }, note: { en: "Renovation, repairs & maintenance for private clients", bg: "Ремонти и поддръжка за частни клиенти" } },
-  { years: "2024–now", title: { en: "AI & automation projects", bg: "AI и автоматизационни проекти" }, note: { en: "Formal training, self-directed learning and hands-on portfolio projects", bg: "Формално обучение, самостоятелно учене и практически портфолио проекти" } },
+export const journey: { years: Localized; title: Localized; note: Localized }[] = [
+  { years: { en: "2008–2017", bg: "2008–2017" }, title: { en: "National Library", bg: "Национална библиотека" }, note: { en: "Long-term structured, detail-oriented work", bg: "Дългогодишна структурирана работа с внимание към детайла" } },
+  { years: { en: "2018–2019", bg: "2018–2019" }, title: { en: "Technical Assistant / IT Support", bg: "Технически асистент / IT поддръжка" }, note: { en: "Hands-on technical troubleshooting", bg: "Практическо решаване на технически проблеми" } },
+  { years: { en: "2020–2023", bg: "2020–2023" }, title: { en: "QA Tester · uTest", bg: "QA тестер · uTest" }, note: { en: "Testing, bug reporting, quality mindset", bg: "Тестване, докладване на бъгове, фокус върху качеството" } },
+  { years: { en: "2023–now", bg: "2023–досега" }, title: { en: "Independent Contractor", bg: "Самостоятелна дейност" }, note: { en: "Renovation, repairs & maintenance for private clients", bg: "Ремонти и поддръжка за частни клиенти" } },
+  { years: { en: "2024–now", bg: "2024–досега" }, title: { en: "AI & automation projects", bg: "AI и автоматизационни проекти" }, note: { en: "Formal training, self-directed learning and hands-on portfolio projects", bg: "Формално обучение, самостоятелно учене и практически портфолио проекти" } },
 ];
 
 export const t = {
