@@ -287,7 +287,7 @@ function Identity() {
             <h1 className="min-w-0 text-6xl font-semibold leading-[0.92] tracking-tight xl:text-7xl">
               {first}<br />{last}
             </h1>
-            <img src={PORTRAIT} alt="Portrait of Stefan Badev" width={112} height={140} className="h-[140px] w-[112px] rounded-[3px] object-cover object-[50%_20%] grayscale-[15%]" />
+            <img src={PORTRAIT} alt="Portrait of Stefan Badev" width={160} height={201} className="h-auto w-[150px] shrink-0 rounded-[3px] object-cover object-[50%_20%] grayscale-[15%] xl:w-[160px]" />
           </div>
 
           <div className="mt-6 flex items-center gap-3">
