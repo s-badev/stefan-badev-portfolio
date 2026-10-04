@@ -284,7 +284,7 @@ function Identity() {
           </div>
 
           <div className="mt-10 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-6">
-            <h1 className="min-w-0 text-6xl font-semibold leading-[0.92] tracking-tight xl:text-7xl">
+            <h1 className="mb-6 min-w-0 text-6xl font-semibold leading-[0.92] tracking-tight xl:text-7xl">
               {first}<br />{last}
             </h1>
             <img src={PORTRAIT} alt="Portrait of Stefan Badev" width={160} height={201} className="h-auto w-[150px] shrink-0 rounded-[3px] object-cover object-[50%_20%] grayscale-[15%] xl:w-[160px]" />
