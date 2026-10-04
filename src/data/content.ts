@@ -190,10 +190,13 @@ export const projects: Project[] = [
     kind: "coded",
     featured: false,
     title: "FreshBox",
-    subtitle: { en: "E-commerce web application", bg: "E-commerce уеб приложение" },
+    subtitle: {
+      en: "Demo e-commerce application with product catalog, search and filtering, cart, checkout flow, order history and admin functionality, built with a Supabase backend.",
+      bg: "Демо e-commerce приложение с продуктов каталог, търсене и филтриране, количка, checkout flow, история на поръчките и админ функционалност, изградено със Supabase backend.",
+    },
     problem: {
-      en: "Build a functional e-commerce experience with authentication, product management, shopping flow and backend persistence.",
-      bg: "Функционален онлайн магазин с автентикация, управление на продукти, процес на поръчка и съхранение на данни.",
+      en: "Build a functional e-commerce demo that demonstrates the main shopping flow and backend functionality without representing a real commercial store.",
+      bg: "Изграждане на функционално e-commerce демо, което показва основния shopping flow и backend функционалност, без да представлява реален търговски онлайн магазин.",
     },
     highlights: {
       en: [
