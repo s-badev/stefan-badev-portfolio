@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
-import portrait from "@/assets/stefan-badev.jpg.asset.json";
+const PORTRAIT = "/images/stefan-badev.webp";
 import { cv, journey, links, projects, sections, t, type Lang, type Project, type SectionId } from "@/data/content";
 
 const TITLE = "Stefan Badev | Junior AI & Automation Developer";
@@ -262,7 +262,7 @@ function Identity() {
           <h1 className="min-w-0 text-[2.75rem] font-semibold leading-[0.95] tracking-tight sm:text-6xl">
             {first}<br />{last}
           </h1>
-          <img src={portrait.url} alt={`Portrait of ${name}`} width={96} height={120} className="h-[120px] w-[96px] shrink-0 rounded-[3px] object-cover object-[50%_20%] grayscale-[15%]" />
+          <img src={PORTRAIT} alt="Portrait of Stefan Badev" width={96} height={120} className="h-[120px] w-[96px] shrink-0 rounded-[3px] object-cover object-[50%_20%] grayscale-[15%]" />
         </div>
         <div className="mt-5 flex items-center gap-3">
           <span aria-hidden="true" className="h-px w-8 bg-gold" />
@@ -287,7 +287,7 @@ function Identity() {
             <h1 className="min-w-0 text-6xl font-semibold leading-[0.92] tracking-tight xl:text-7xl">
               {first}<br />{last}
             </h1>
-            <img src={portrait.url} alt={`Portrait of ${name}`} width={112} height={140} className="h-[140px] w-[112px] rounded-[3px] object-cover object-[50%_20%] grayscale-[15%]" />
+            <img src={PORTRAIT} alt="Portrait of Stefan Badev" width={112} height={140} className="h-[140px] w-[112px] rounded-[3px] object-cover object-[50%_20%] grayscale-[15%]" />
           </div>
 
           <div className="mt-6 flex items-center gap-3">
