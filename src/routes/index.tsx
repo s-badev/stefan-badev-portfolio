@@ -404,9 +404,9 @@ function Page({ mainRef }: { mainRef: React.RefObject<HTMLElement | null> }) {
               {journey.map((j, i) => {
                 const last = i === journey.length - 1;
                 return (
-                  <li key={j.years} className="relative min-w-0">
+                  <li key={j.years.en} className="relative min-w-0">
                     <span aria-hidden="true" className={`absolute -left-[29px] top-1.5 h-2.5 w-2.5 rotate-45 md:-top-[37px] md:left-0 ${last ? "bg-gold" : "border border-foreground/40 bg-background"}`} />
-                    <p className={`font-mono text-xs ${last ? "text-gold" : "text-muted-foreground"}`}>{j.years}</p>
+                    <p className={`font-mono text-xs ${last ? "text-gold" : "text-muted-foreground"}`}>{j.years[lang]}</p>
                     <p className="mt-1.5 font-semibold leading-snug">{j.title[lang]}</p>
                     <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{j.note[lang]}</p>
                   </li>
